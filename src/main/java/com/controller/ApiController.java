@@ -22,9 +22,9 @@ public class ApiController {
     private BookRepository bookRepository;
 
     @JsonFormat
-    @GetMapping("/books/{pageNumber}")
-    public Page<Book> getBooks(@PathVariable String pageNumber) {
-        PageRequest page = new PageRequest(Integer.parseInt(pageNumber), 10);
+    @GetMapping("/books/{pageNumber}/{pageSize}")
+    public Page<Book> getBooks(@PathVariable String pageNumber, @PathVariable String pageSize) {
+        PageRequest page = new PageRequest(Integer.parseInt(pageNumber), Integer.parseInt(pageSize));
         return bookRepository.findAll(page);
     }
 
@@ -37,7 +37,7 @@ public class ApiController {
     @JsonFormat
     @GetMapping("/page")
     public Long getPageCount() {
-        return bookRepository.count() / 10 + 1;
+        return bookRepository.count();
     }
 
 }
