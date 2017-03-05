@@ -21,7 +21,7 @@
         $scope.upload = function () {
             $http.post('/api/page', $scope.addBookItem)
                 .then(function (response) {
-                    $scope.pages = parseInt(response.data);
+                    $scope.pages = parseInt(response.data) / 10;
                 }, function () {
 
                 });
@@ -46,7 +46,7 @@
         }, true);
 
         $scope.getPage = function (page) {
-            $http.get('/api/books/' + parseInt(page))
+            $http.get('/api/books/' + parseInt(page) + '/' + 10)
                 .then(function (response) {
                     $scope.books = response.data.content;
                 }, function () {
