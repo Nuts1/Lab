@@ -23,9 +23,15 @@ public class ApiController {
 
     @JsonFormat
     @GetMapping("/books/{pageNumber}")
-    public Page<Book> getBook(@PathVariable String pageNumber) {
+    public Page<Book> getBooks(@PathVariable String pageNumber) {
         PageRequest page = new PageRequest(Integer.parseInt(pageNumber), 10);
         return bookRepository.findAll(page);
+    }
+
+    @JsonFormat
+    @GetMapping("/book/{bookId}")
+    public Book getBook(@PathVariable String bookId) {
+        return bookRepository.findOne(Integer.parseInt(bookId));
     }
 
     @JsonFormat
