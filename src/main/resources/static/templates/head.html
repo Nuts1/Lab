@@ -14,7 +14,7 @@
         <div ng-controller="toolbarCtrl as tb" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul ng-repeat="item in tb.menuItems" class="nav navbar-nav">
                 <li ng-class="{active : tb.isActive(item)}">
-                    <a href="{{item}}">{{item | capitalize}}</a>
+                    <a href="/admin{{item}}">{{item | capitalize}}</a>
                 </li>
             </ul>
 

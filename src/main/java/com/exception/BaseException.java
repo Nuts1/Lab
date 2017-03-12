@@ -1,9 +1,6 @@
 package com.exception;
 
-/**
- * Created by Nuts on 2/27/2017
- * 9:32 PM.
- */
+
 public class BaseException extends Exception {
     private String description;
 

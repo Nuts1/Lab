@@ -2,10 +2,6 @@ package com.entity;
 
 import javax.persistence.*;
 
-/**
- * Created by Nuts on 2/28/2017
- * 11:22 PM.
- */
 @Entity(name = "book")
 public class Book {
     @Id

@@ -1,5 +1,5 @@
 <custom-header></custom-header>
-<div class="container-fluid text-center" ng-controller="booksController as bookCtrl" ng-init="init()">
+<div class="container-fluid text-center" ng-cloak="" ng-init="init()">
     <div class="row content">
         <div class="col-sm-2 sidenav">
             <p><a href="#">Some filters<h4></h4></a></p>
@@ -17,44 +17,44 @@
                             <p>{{book.name | limitTo : 25}}</p>
                             <p>{{book.author.name}}</p>
                             <p>Year: {{book.year}}</p>
-                            <button class="btn" data-toggle="modal" data-target="#myModal">Edit</button>
-                            <button class="btn" data-toggle="modal" data-target="#myModal">Delete</button>
+                            <button class="btn bnt-primary">Edit</button>
+                            <button class="btn bnt-primary" ng-click="delete(book.id)">Delete</button>
                         </div>
                     </div>
                 </div>
             </div>
+
             <ul ng-repeat="i in range() track by $index" class="pagination">
-                <li ng-class="{active: isActive($index)}"><a ng-click="setCurrentPage($index)">{{$index + 1}}</a></li>
+                <li ng-class="{active: isActive($index)}"><a ng-click="getPage($index)">{{$index + 1}}</a></li>
             </ul>
-        </div>
-        <div class="col-sm-2">
-            <div class="well">
-                <div class="form-group">
-                    <div class="col-10">
-                        <label>Book Name:</label>
-                        <input type="text" ng-model="addBookItem.name" class="form-control">
-                    </div>
-                    <div class="col-10">
-                        <label>Author:</label>
-                        <input type="text" ng-model="addBookItem.author" class="form-control">
-                    </div>
-                    <div class="col-10">
-                        <label>Description:</label>
-                        <textarea ng-model="addBookItem.description" class="form-control"></textarea>
-                    </div>
-                    <div class="col-10">
-                        <label>Icon File:</label>
-                        <input type="file" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|images/*" ng-model="addBookItem.icon" class="form-control">
-                    </div>
-                    <div class="col-10">
-                        <label>Book File:</label>
-                        <input type="file" accept=".pdf" ng-model="addBookItem.file" class="form-control">
-                    </div>
-                    <div class="col-10">
-                        <button class="btn btn-primary" ng-click="upload()">Add</button>
-                    </div>
+
+            <div class="form-group">
+                <div class="col-10">
+                    <label>Book Name:</label>
+                    <input type="text" ng-model="addBookItem.name" class="form-control">
+                </div>
+                <div class="col-10">
+                    <label>Author:</label>
+                    <input type="text" ng-model="addBookItem.author" class="form-control">
+                </div>
+                <div class="col-10">
+                    <label>Description:</label>
+                    <textarea ng-model="addBookItem.description" class="form-control"></textarea>
+                </div>
+                <div class="col-10">
+                    <label>Icon File:</label>
+                    <input type="file" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|images/*" fileread="addBookItem.icon" class="form-control">
+                </div>
+                <div class="col-10">
+                    <label>Book File:</label>
+                    <input type="file" accept=".pdf" fileread="addBookItem.file" class="form-control">
+                </div>
+                <div class="col-10">
+                    <button class="btn btn-primary" ng-click="upload()">Add</button>
                 </div>
             </div>
+
+
         </div>
     </div>
 </div>

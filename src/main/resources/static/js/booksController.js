@@ -2,60 +2,92 @@
  * Created by Nuts on 2/28/2017.
  */
 (function () {
-    angular.module('server').controller('booksController', function ($scope, $http) {
-
-        $scope.books = {};
-        $scope.currentPage = 0;
-
-        $scope.addBookItem = 0;
-
-        $scope.init = function () {
-            $http.get('/api/page')
-                .then(function (response) {
-                    $scope.pages = parseInt(response.data);
-                }, function () {
-
-                });
-        };
-
-        $scope.upload = function () {
-            $http.post('/api/page', $scope.addBookItem)
-                .then(function (response) {
-                    $scope.pages = parseInt(response.data) / 10;
-                }, function () {
-
-                });
-        };
-
-        $scope.$watch('pages', function( newValue, oldValue ){
-            if($scope.pages > 0) {
-                $scope.getPage(0);
+    angular.module('server')
+        .directive("fileread", [function () {
+            return {
+                scope: {
+                    fileread: "="
+                },
+                link: function (scope, element, attributes) {
+                    element.bind("change", function (changeEvent) {
+                        var reader = new FileReader();
+                        reader.onload = function (loadEvent) {
+                            scope.$apply(function () {
+                                scope.fileread = loadEvent.target.result;
+                            });
+                        };
+                        reader.readAsDataURL(changeEvent.target.files[0]);
+                    });
+                }
             }
-        }, true);
+        }])
+        .controller('booksController', ["$scope", "$http", "$routeParams",
+            function ($scope, $http, $routeParams) {
 
-        $scope.setCurrentPage = function(n) {
-            $scope.currentPage = n;
-        };
+                $scope.books = {};
+                $scope.addBookItem = {};
 
-        $scope.isActive = function(index){
-            return $scope.currentPage === index;
-        };
+                $scope.pageSize = 9;
+                $scope.maxSize = 5;
+                $scope.totalItems = 0;
+                $scope.currentPage = 0;
 
-        $scope.$watch('currentPage', function( newValue, oldValue ){
-            $scope.getPage($scope.currentPage);
-        }, true);
+                $scope.setCurrentPage = function(n) {
+                    $scope.currentPage = n;
+                };
 
-        $scope.getPage = function (page) {
-            $http.get('/api/books/' + parseInt(page) + '/' + 10)
-                .then(function (response) {
-                    $scope.books = response.data.content;
-                }, function () {
+                $scope.getPage = function (page) {
+                    $scope.setCurrentPage(page);
+                    $http.get('/api/books/' + parseInt(page) + '/' + 9)
+                        .then(function (response) {
+                            $scope.books = response.data.content;
+                        }, function () {
 
-                });
-        };
+                        });
+                };
 
-        $scope.range = function() {
-            return new Array(parseInt($scope.pages));
-        };
-    })
+                $scope.init = function () {
+                    $http.get('/api/page')
+                        .then(function (response) {
+                            $scope.totalItems = parseInt(response.data);
+                        }, function () {
+
+                        });
+                };
+
+                $scope.getPage(0);
+
+                $scope.pageChanged = function() {
+                    $scope.getPage($scope.currentPage);
+                };
+
+                $scope.upload = function () {
+                    $http.post('/api/upload', $scope.addBookItem, {
+                        headers: {'Content-Type': undefined }
+                    }).then(function (response) {
+                            //TODO
+                      }, function () {
+
+                      });
+                };
+
+                $scope.delete = function (id) {
+                    $http.post('/api/book/delete/' + id)
+                        .then(function (response) {
+                            $scope.init();
+                            $scope.getPage(0);
+                        }, function () {
+
+                        });
+                };
+
+
+                $scope.isActive = function(index){
+                    return $scope.currentPage === index;
+                };
+
+                $scope.range = function() {
+                    return new Array(parseInt($scope.totalItems / $scope.pageSize)); // TODO No.
+                };
+            }])
 })();

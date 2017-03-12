@@ -9,10 +9,10 @@ app.config(["$routeProvider", "$httpProvider", "$locationProvider",
             templateUrl: 'templates/login.html',
             controller: 'loginController'
         })
-        .when('/home', {
+        .when('/admin/home', {
             templateUrl: 'templates/home.html',
             controller: 'adminController'
-        }).when('/errorPage', {
+        }).when('/admin/errorPage', {
             templateUrl: 'templates/errorPage.html',
             controller: 'adminController'
         })
@@ -20,22 +20,22 @@ app.config(["$routeProvider", "$httpProvider", "$locationProvider",
             templateUrl: 'templates/home.html',
             controller: 'adminController'
         })
-        .when('/books', {
+        .when('/admin/books', {
             templateUrl: 'templates/books.html',
             controller: 'booksController'
         })
-        .when('/emails', {
+        .when('/admin/emails', {
             templateUrl: 'templates/emails.html',
             controller: 'adminController'
         })
         .when('/admin', {
             templateUrl: 'templates/home.html',
             controller: 'adminController'
-        }) .when('/peoples', {
+        }) .when('/admin/peoples', {
             templateUrl: 'templates/peoples.html',
             controller: 'peoplesController'
         })
-        .when('/errors', {
+        .when('/admin/errors', {
             templateUrl: 'templates/errors.html',
             controller: 'errorsController'
         });
