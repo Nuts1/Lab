@@ -34,13 +34,13 @@ public class AdminRest {
             try {
                 byte[] bytes = file.getBytes();
 
-                // Creating the directory to store file
+                // Creating the directory to store file.sql
                 String rootPath = System.getProperty("catalina.home");
                 File dir = new File(rootPath + File.separator + "tmpFiles");
                 if (!dir.exists())
                     dir.mkdirs();
 
-                // Create the file on server
+                // Create the file.sql on server
                 File serverFile = new File(dir.getAbsolutePath()
                         + File.separator + name);
                 BufferedOutputStream stream = new BufferedOutputStream(

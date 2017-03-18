@@ -2,8 +2,10 @@ package com.controller;
 
 import com.dto.Message;
 import com.entity.Book;
+import com.entity.Category;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.repository.BookRepository;
+import com.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,8 +16,15 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 public class ApiController {
+    private final BookRepository bookRepository;
+    private final CategoryRepository categoryRepository;
+
     @Autowired
-    private BookRepository bookRepository;
+    public ApiController(BookRepository bookRepository,
+                         CategoryRepository categoryRepository) {
+        this.bookRepository = bookRepository;
+        this.categoryRepository = categoryRepository;
+    }
 
     @JsonFormat
     @GetMapping("/books/{pageNumber}/{pageSize}")
@@ -37,9 +46,30 @@ public class ApiController {
     }
 
     @JsonFormat
-    @PostMapping("/book/delete/{bookId}")
+    @DeleteMapping("/book/{bookId}")
     public ResponseEntity<Message> deleteBook(@PathVariable String bookId) {
         bookRepository.delete(Integer.parseInt(bookId));
         return new ResponseEntity<>(new Message("Deleted"), HttpStatus.OK);
     }
+
+    @JsonFormat
+    @GetMapping("/books/{category}/{pageNumber}/{pageSize}")
+    public Page<Book> getBookByCategory(@PathVariable String category, @PathVariable String pageNumber, @PathVariable String pageSize) {
+        PageRequest page = new PageRequest(Integer.parseInt(pageNumber), Integer.parseInt(pageSize));
+        return bookRepository.findByCategoryName(category, page);
+    }
+
+    @JsonFormat
+    @GetMapping("/category")
+    public Iterable<Category> getCategories() {
+        return categoryRepository.findAll();
+    }
+
+//    @JsonFormat
+//    @PreAuthorize(value = "hasRole('ROLE_USER')")
+//    @GetMapping("/books/category/{pageNumber}/{pageSize}")
+//    public Page<Book> getUserCatalog(@PathVariable String pageNumber, @PathVariable String pageSize, Principal principal) {
+//        PageRequest page = new PageRequest(Integer.parseInt(pageNumber), Integer.parseInt(pageSize));
+//        return bookRepository.findByCategoryName(principal.getName(), page);
+//    }
 }

@@ -72,7 +72,7 @@
                 };
 
                 $scope.delete = function (id) {
-                    $http.post('/api/book/delete/' + id)
+                    $http.delete('/api/book/' + id)
                         .then(function (response) {
                             $scope.init();
                             $scope.getPage(0);
