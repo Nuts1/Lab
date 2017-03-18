@@ -63,6 +63,8 @@ public class Main extends SpringBootServletInitializer {
                     .httpBasic()
                     .and()
                     .authorizeRequests()
+                    .antMatchers("/book/**").permitAll()
+                    .antMatchers("/image/**").permitAll()
                     .antMatchers("/admin/**").hasRole("ADMIN")
                     .antMatchers("/admin").hasRole("ADMIN")
                     .antMatchers("/api/**").permitAll()
