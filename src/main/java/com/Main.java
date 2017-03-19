@@ -95,10 +95,10 @@ public class Main extends SpringBootServletInitializer {
                     .dataSource(dataSource)
                     .passwordEncoder(passwordEncoder())
                     .usersByUsernameQuery(
-                            "select email, password, 'true' from public.user where email=?")
+                            "select email, password, 'true' from person where email=?")
                     .authoritiesByUsernameQuery(
                             "SELECT u.email, r.role " +
-                                    "FROM public.user u, role r " +
+                                    "FROM person u, role r " +
                                     "WHERE u.role_id = r.role_id AND u.email=?");
         }
     }

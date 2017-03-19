@@ -1,8 +1,13 @@
 package com.controller;
 
 import com.dto.BookDto;
+import com.entity.User;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.repository.BookRepository;
+import com.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -19,8 +24,14 @@ import java.io.FileOutputStream;
  */
 @RestController
 public class AdminRest {
+    private final BookRepository bookRepository;
+    private final UserRepository userRepository;
+
     @Autowired
-    BookRepository bookRepository;
+    public AdminRest(BookRepository bookRepository, UserRepository userRepository) {
+        this.bookRepository = bookRepository;
+        this.userRepository = userRepository;
+    }
 
     @PostMapping("/admin/addBook")
     public ResponseEntity<?> addBook(@Validated @RequestBody BookDto bookDto) {
@@ -55,5 +66,19 @@ public class AdminRest {
         } else {
             return new ResponseEntity<>("File empty", HttpStatus.BAD_REQUEST);
         }
+    }
+
+
+    @JsonFormat
+    @GetMapping("/admin/user/{pageNumber}/{pageSize}")
+    public Iterable<User> getUsers(@PathVariable String pageNumber, @PathVariable String pageSize) {
+        Pageable pageable = new PageRequest(Integer.parseInt(pageNumber), Integer.parseInt(pageSize));
+        return userRepository.findAll(pageable);
+    }
+
+    @JsonFormat
+    @GetMapping("/admin/user/page")
+    public long getUsersCount() {
+        return userRepository.count();
     }
 }

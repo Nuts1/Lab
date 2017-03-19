@@ -173,11 +173,11 @@ ALTER SEQUENCE role_role_id_seq OWNED BY role.role_id;
 
 
 --
--- Name: user; Type: TABLE; Schema: public; Owner: postgres
+-- Name: person; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE "user" (
-    id_user integer NOT NULL,
+CREATE TABLE "person" (
+    id_person integer NOT NULL,
     password character varying(100) NOT NULL,
     email character varying(50) NOT NULL,
     first_name character varying(50) NOT NULL,
@@ -186,26 +186,26 @@ CREATE TABLE "user" (
 );
 
 
-ALTER TABLE "user" OWNER TO postgres;
+ALTER TABLE person OWNER TO postgres;
 
 --
--- Name: user_catalog; Type: TABLE; Schema: public; Owner: postgres
+-- Name: person_catalog; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE user_catalog (
-    id_user integer NOT NULL,
+CREATE TABLE person_catalog (
+    id_person integer NOT NULL,
     id_book integer NOT NULL,
-    id_user_catalog integer NOT NULL
+    id_person_catalog integer NOT NULL
 );
 
 
-ALTER TABLE user_catalog OWNER TO postgres;
+ALTER TABLE person_catalog OWNER TO postgres;
 
 --
--- Name: user_catalog_id_user_catalog_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: person_catalog_id_person_catalog_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE user_catalog_id_user_catalog_seq
+CREATE SEQUENCE person_catalog_id_person_catalog_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -213,20 +213,20 @@ CREATE SEQUENCE user_catalog_id_user_catalog_seq
     CACHE 1;
 
 
-ALTER TABLE user_catalog_id_user_catalog_seq OWNER TO postgres;
+ALTER TABLE person_catalog_id_person_catalog_seq OWNER TO postgres;
 
 --
--- Name: user_catalog_id_user_catalog_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: person_catalog_id_person_catalog_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE user_catalog_id_user_catalog_seq OWNED BY user_catalog.id_user_catalog;
+ALTER SEQUENCE person_catalog_id_person_catalog_seq OWNED BY person_catalog.id_person_catalog;
 
 
 --
--- Name: user_id_user_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: person_id_person_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE user_id_user_seq
+CREATE SEQUENCE person_id_person_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -234,13 +234,13 @@ CREATE SEQUENCE user_id_user_seq
     CACHE 1;
 
 
-ALTER TABLE user_id_user_seq OWNER TO postgres;
+ALTER TABLE person_id_person_seq OWNER TO postgres;
 
 --
--- Name: user_id_user_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: person_id_person_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE user_id_user_seq OWNED BY "user".id_user;
+ALTER SEQUENCE person_id_person_seq OWNED BY "person".id_person;
 
 
 --
@@ -272,17 +272,17 @@ ALTER TABLE ONLY role ALTER COLUMN role_id SET DEFAULT nextval('role_role_id_seq
 
 
 --
--- Name: id_user; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id_person; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY "user" ALTER COLUMN id_user SET DEFAULT nextval('user_id_user_seq'::regclass);
+ALTER TABLE ONLY "person" ALTER COLUMN id_person SET DEFAULT nextval('person_id_person_seq'::regclass);
 
 
 --
--- Name: id_user_catalog; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id_person_catalog; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY user_catalog ALTER COLUMN id_user_catalog SET DEFAULT nextval('user_catalog_id_user_catalog_seq'::regclass);
+ALTER TABLE ONLY person_catalog ALTER COLUMN id_person_catalog SET DEFAULT nextval('person_catalog_id_person_catalog_seq'::regclass);
 
 
 --
@@ -443,32 +443,32 @@ SELECT pg_catalog.setval('role_role_id_seq', 1, false);
 
 
 --
--- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: person; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "user" (id_user, password, email, first_name, last_name, role_id) VALUES (1, '$2a$11$kbrpfbTih2C7HW2oYt1Pj.sMPwE4NOwo3aw3kiPnwyQ0fTdU0qNtG', 'admin@mail.com', 'Aleksandr', 'Vavilin', 1);
-
-
---
--- Data for Name: user_catalog; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-INSERT INTO user_catalog (id_user, id_book, id_user_catalog) VALUES (1, 1, 1);
-INSERT INTO user_catalog (id_user, id_book, id_user_catalog) VALUES (1, 3, 2);
+INSERT INTO person (id_person, password, email, first_name, last_name, role_id) VALUES (1, '$2a$11$kbrpfbTih2C7HW2oYt1Pj.sMPwE4NOwo3aw3kiPnwyQ0fTdU0qNtG', 'admin@mail.com', 'Aleksandr', 'Vavilin', 1);
 
 
 --
--- Name: user_catalog_id_user_catalog_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Data for Name: person_catalog; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('user_catalog_id_user_catalog_seq', 1, false);
+INSERT INTO person_catalog (id_person, id_book, id_person_catalog) VALUES (1, 1, 1);
+INSERT INTO person_catalog (id_person, id_book, id_person_catalog) VALUES (1, 3, 2);
 
 
 --
--- Name: user_id_user_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: person_catalog_id_person_catalog_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('user_id_user_seq', 1, false);
+SELECT pg_catalog.setval('person_catalog_id_person_catalog_seq', 1, false);
+
+
+--
+-- Name: person_id_person_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('person_id_person_seq', 1, false);
 
 
 --
@@ -504,19 +504,19 @@ ALTER TABLE ONLY role
 
 
 --
--- Name: user_catalog_id_user_catalog_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: person_catalog_id_person_catalog_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY user_catalog
-    ADD CONSTRAINT user_catalog_id_user_catalog_pk PRIMARY KEY (id_user_catalog);
+ALTER TABLE ONLY person_catalog
+    ADD CONSTRAINT person_catalog_id_person_catalog_pk PRIMARY KEY (id_person_catalog);
 
 
 --
--- Name: user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: person_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY "user"
-    ADD CONSTRAINT user_pkey PRIMARY KEY (id_user);
+ALTER TABLE ONLY "person"
+    ADD CONSTRAINT person_pkey PRIMARY KEY (id_person);
 
 
 --
@@ -534,10 +534,10 @@ CREATE UNIQUE INDEX role_role_uindex ON role USING btree (role);
 
 
 --
--- Name: user_catalog_id_user_catalog_uindex; Type: INDEX; Schema: public; Owner: postgres
+-- Name: person_catalog_id_person_catalog_uindex; Type: INDEX; Schema: public; Owner: postgres
 --
 
-CREATE UNIQUE INDEX user_catalog_id_user_catalog_uindex ON user_catalog USING btree (id_user_catalog);
+CREATE UNIQUE INDEX person_catalog_id_person_catalog_uindex ON person_catalog USING btree (id_person_catalog);
 
 
 --
@@ -549,27 +549,27 @@ ALTER TABLE ONLY book
 
 
 --
--- Name: user_catalog_book_id_book_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: person_catalog_book_id_book_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY user_catalog
-    ADD CONSTRAINT user_catalog_book_id_book_fk FOREIGN KEY (id_book) REFERENCES book(id_book);
-
-
---
--- Name: user_catalog_user_id_user_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY user_catalog
-    ADD CONSTRAINT user_catalog_user_id_user_fk FOREIGN KEY (id_user) REFERENCES "user"(id_user);
+ALTER TABLE ONLY person_catalog
+    ADD CONSTRAINT person_catalog_book_id_book_fk FOREIGN KEY (id_book) REFERENCES book(id_book);
 
 
 --
--- Name: user_role_role_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: person_catalog_person_id_person_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY "user"
-    ADD CONSTRAINT user_role_role_id_fk FOREIGN KEY (role_id) REFERENCES role(role_id);
+ALTER TABLE ONLY person_catalog
+    ADD CONSTRAINT person_catalog_person_id_person_fk FOREIGN KEY (id_person) REFERENCES "person"(id_person);
+
+
+--
+-- Name: person_role_role_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "person"
+    ADD CONSTRAINT person_role_role_id_fk FOREIGN KEY (role_id) REFERENCES role(role_id);
 
 
 --

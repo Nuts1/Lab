@@ -1,4 +1,29 @@
 <custom-header></custom-header>
-<div ng-controller="peoplesController as peoplesCtrl">
-    <h1>Only for admin. Peoples</h1>
+<div>
+    <div class="col-sm-2 sidenav">
+    </div>
+    <div class="col-sm-8 text-left">
+        <h1>Peoples</h1>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+                <th>Role</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="x in users">
+                    <td>{{x.firstName}}</td>
+                    <td>{{x.lastName}}</td>
+                    <td>{{x.email}}</td>
+                    <td>{{x.role.name}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <ul ng-repeat="i in range() track by $index" class="pagination">
+            <li ng-class="{active: isActive($index)}"><a ng-click="getPage($index)">{{$index + 1}}</a></li>
+        </ul>
+    </div>
 </div>
