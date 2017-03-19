@@ -12,4 +12,7 @@ public interface BookRepository extends PagingAndSortingRepository<Book, Integer
 
     @Query("SELECT b FROM com.entity.Book b WHERE lower(b.category.name) like concat('%', lower(?1), '%')")
     Page<Book> findByCategoryName(String categoryName, Pageable pageable);
+
+    @Query("SELECT count(b) FROM com.entity.Book b WHERE lower(b.category.name) like concat('%', lower(?1), '%')")
+    long countCategoryName(String categoryName);
 }

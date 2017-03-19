@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -46,6 +47,13 @@ public class ApiController {
     }
 
     @JsonFormat
+    @GetMapping("/page/{category}")
+    public Long getPageCategoryCount(@PathVariable String category) {
+        return bookRepository.countCategoryName(category);
+    }
+
+    @JsonFormat
+    @PreAuthorize(value = "hasRole('ROLE_ADMIN')")
     @DeleteMapping("/book/{bookId}")
     public ResponseEntity<Message> deleteBook(@PathVariable String bookId) {
         bookRepository.delete(Integer.parseInt(bookId));
