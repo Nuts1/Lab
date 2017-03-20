@@ -24,10 +24,6 @@ app.config(["$routeProvider", "$httpProvider", "$locationProvider",
             templateUrl: 'templates/books.html',
             controller: 'booksController'
         })
-        .when('/admin/emails', {
-            templateUrl: 'templates/emails.html',
-            controller: 'adminController'
-        })
         .when('/admin', {
             templateUrl: 'templates/home.html',
             controller: 'adminController'
@@ -35,9 +31,9 @@ app.config(["$routeProvider", "$httpProvider", "$locationProvider",
             templateUrl: 'templates/peoples.html',
             controller: 'peoplesController'
         })
-        .when('/admin/errors', {
-            templateUrl: 'templates/errors.html',
-            controller: 'errorsController'
+        .when('/admin/orders', {
+            templateUrl: 'templates/orders.html',
+            controller: 'ordersController'
         });
     
     $locationProvider.html5Mode({enabled: true});

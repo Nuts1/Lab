@@ -1,9 +1,11 @@
 package com.controller;
 
 import com.dto.BookDto;
+import com.entity.Order;
 import com.entity.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.repository.BookRepository;
+import com.repository.OrderRepository;
 import com.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -26,11 +28,13 @@ import java.io.FileOutputStream;
 public class AdminRest {
     private final BookRepository bookRepository;
     private final UserRepository userRepository;
+    private final OrderRepository orderRepository;
 
     @Autowired
-    public AdminRest(BookRepository bookRepository, UserRepository userRepository) {
+    public AdminRest(BookRepository bookRepository, OrderRepository orderRepository, UserRepository userRepository) {
         this.bookRepository = bookRepository;
         this.userRepository = userRepository;
+        this.orderRepository = orderRepository;
     }
 
     @PostMapping("/admin/addBook")
@@ -81,4 +85,18 @@ public class AdminRest {
     public long getUsersCount() {
         return userRepository.count();
     }
+
+    @JsonFormat
+    @GetMapping("/admin/order/{pageNumber}/{pageSize}")
+    public Iterable<Order> getOrders(@PathVariable String pageNumber, @PathVariable String pageSize) {
+        Pageable pageable = new PageRequest(Integer.parseInt(pageNumber), Integer.parseInt(pageSize));
+        return orderRepository.findAll(pageable);
+    }
+
+    @JsonFormat
+    @GetMapping("/admin/order/page")
+    public long getOrderCount() {
+        return orderRepository.count();
+    }
+
 }

@@ -4,7 +4,7 @@
 
 (function () {
     angular.module('server').controller('toolbarCtrl',  ['$http', '$location', function ($http, $location) {
-        this.menuItems = ['/books', '/errors', '/emails', '/peoples'];
+        this.menuItems = ['/books', '/orders', '/peoples'];
 
         this.isActive = function (item) {
             return item === $location.path();
